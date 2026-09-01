@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\DB;
 class SpatialSearchService
 {
     /**
-     * Radius in meters (default: 15,000 m = 15 km)
+     * Radius in meters (default: 30,000 m = 30 km)
      */
-    protected float $defaultRadius = 15000.0;
+    protected float $defaultRadius = 30000.0;
 
     /**
      * Retrieve all spatially pruned service candidates around target coordinates.
