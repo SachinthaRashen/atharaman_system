@@ -28,20 +28,30 @@ return new class extends Migration
                 'admin'
             ])->default('tourist');
 
+            // Private Admin Verification Data (Nullable for normal tourists)
+            $table->string('phone_number')->nullable();
+            $table->string('nic_passport_number')->nullable();
+            $table->text('residential_address')->nullable();
+
             // Static Demographics & Cold-Start Persona Attributes (For K-Means)
+            $table->date('date_of_birth')->nullable();
             $table->string('country')->nullable();              // e.g., 'Sri Lanka', 'Germany'
+            $table->boolean('prefers_guided_tours')->nullable();
+            $table->boolean('requires_accessibility')->default(false);
             $table->string('native_language')->default('English'); // Guide language matching
             $table->enum('preferred_travel_style', [
-                'adventure', 
-                'cultural', 
-                'nature', 
-                'leisure'
+                'adventure',        // Surfing, mountain hiking, extreme sports
+                'cultural_historic',// Ancient cities, temples, colonial forts
+                'nature_wildlife',  // Safaris, rainforests, botanical gardens
+                'leisure_wellness'  // Beaches, Ayurveda retreats, luxury resorts
             ])->nullable();
             $table->enum('preferred_budget_tier', [
                 'budget', 
                 'mid_range', 
                 'luxury'
             ])->nullable();
+
+            $table->unsignedInteger('ml_cluster_id')->nullable()->index();
             
             $table->rememberToken();
             $table->timestamps();
