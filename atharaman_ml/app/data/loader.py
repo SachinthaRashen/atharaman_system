@@ -25,7 +25,14 @@ def load_interaction_matrix() -> pd.DataFrame:
     SELECT 
         user_id,
         reviewable_id AS item_id,
-        reviewable_type AS item_type,
+        CASE 
+            WHEN reviewable_type = 'App\\Models\\Hotel' THEN 'hotels'
+            WHEN reviewable_type = 'App\\Models\\Location' THEN 'locations'
+            WHEN reviewable_type = 'App\\Models\\Vehicle' THEN 'vehicles'
+            WHEN reviewable_type = 'App\\Models\\Guide' THEN 'guides'
+            WHEN reviewable_type = 'App\\Models\\ShopItem' THEN 'shop_items'
+            ELSE 'unknown'
+        END AS item_type,
         rating::float AS implicit_score,
         'review' AS source
     FROM reviews
@@ -36,7 +43,14 @@ def load_interaction_matrix() -> pd.DataFrame:
     SELECT 
         user_id,
         interactable_id AS item_id,
-        interactable_type AS item_type,
+        CASE 
+            WHEN interactable_type = 'App\\Models\\Hotel' THEN 'hotels'
+            WHEN interactable_type = 'App\\Models\\Location' THEN 'locations'
+            WHEN interactable_type = 'App\\Models\\Vehicle' THEN 'vehicles'
+            WHEN interactable_type = 'App\\Models\\Guide' THEN 'guides'
+            WHEN interactable_type = 'App\\Models\\ShopItem' THEN 'shop_items'
+            ELSE 'unknown'
+        END AS item_type,
         CASE 
             WHEN interaction_type = 'phone_revealed' THEN 5.0
             WHEN interaction_type = 'whatsapp_clicked' THEN 4.0
@@ -55,5 +69,6 @@ def load_service_entities() -> dict[str, pd.DataFrame]:
         "hotels": pd.read_sql("SELECT id, hotel_name, budget_tier, base_price, pricing_model FROM hotels;", engine),
         "vehicles": pd.read_sql("SELECT id, vehicle_type, rate_per_day, rate_per_km, pricing_model FROM vehicles;", engine),
         "guides": pd.read_sql("SELECT id, daily_rate, languages_spoken FROM guides;", engine),
-        "locations": pd.read_sql("SELECT id, name, location_type, terrain_difficulty, requires_4x4, requires_guide FROM locations;", engine)
+        "locations": pd.read_sql("SELECT id, name, location_type, terrain_difficulty, requires_4x4, requires_guide FROM locations;", engine),
+        "shop_items": pd.read_sql("SELECT id, shop_id, item_name, item_category, rental_price_per_day FROM shop_items;", engine)
     }
