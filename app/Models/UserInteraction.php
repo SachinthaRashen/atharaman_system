@@ -18,7 +18,7 @@ class UserInteraction extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Polymorphic relationship (e.g., clicked WhatsApp on a Guide, bookmarked a Hotel)
+    // Polymorphic relationship (e.g., viewed hidden contact no, viewed hidden email, clicked WhatsApp, bookmarked a favourite service)
     public function interactable()
     {
         return $this->morphTo();

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('guides', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
 
             // Unified PostGIS Point
             $table->geography('coordinates', subtype: 'point', srid: 4326);
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->json('languages_spoken');                     // JSON array: ["English", "German", "Sinhala"]
             $table->decimal('daily_rate', 10, 2);                // Budget calculation
             $table->integer('experience_years')->default(1);
-            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }

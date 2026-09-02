@@ -43,5 +43,20 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        $this->call([
+            // 1. Core anchors
+            LocationSeeder::class,
+            
+            // 2. Vendors & Infrastructure
+            HotelSeeder::class,
+            GuideSeeder::class,
+            VehicleSeeder::class,
+            ShopSeeder::class,
+
+            // 3. Tourists & Machine Learning Matrix
+            TouristSeeder::class,
+            InteractionSeeder::class,
+        ]);
     }
 }
