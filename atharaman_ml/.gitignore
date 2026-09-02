@@ -1,0 +1,18 @@
+# Virtual Environments
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables
+.env
+
+# Jupyter Notebook Checkpoints (if you test locally)
+.ipynb_checkpoints
+
+# ML Artifacts (Prevents pushing massive compiled model files to GitHub)
+artifacts/*.pkl
+artifacts/*.joblib
